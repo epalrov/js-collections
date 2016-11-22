@@ -1,0 +1,22 @@
+{
+  "name": "js-collections",
+  "version": "1.0.0",
+  "description": "example of implementation of JavaScript Collections",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epalrov/js-collections.git"
+  },
+  "keywords": [
+    "Collections"
+  ],
+  "author": "Paolo Rovelli <paolorovelli@yahoo.it>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epalrov/js-collections/issues"
+  },
+  "homepage": "https://github.com/epalrov/js-collections#readme"
+}
