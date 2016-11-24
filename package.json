@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "JavaScript Collections",
   "author": "Paolo Rovelli <paolorovelli@yahoo.it>",
-  "license": "MIT",
+  "license": "Unlicense",
   "homepage": "https://github.com/epalrov/js-collections#readme",
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "gulp-zip": "^3.2.0",
-    "merge-stream": "^1.0.0",
     "mocha": "^3.1.2",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"

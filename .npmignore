@@ -1,0 +1,10 @@
+/.git
+/test
+/dist/*.zip
+/node_modules
+
+gulpfile.js
+.gitignore
+.npmignore
+.eslintrc
+

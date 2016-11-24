@@ -19,7 +19,6 @@ var zip = require('gulp-zip');
 var browserify = require('browserify');
 var collapse = require('bundle-collapser/plugin');
 var source = require('vinyl-source-stream');
-var merge = require('merge-stream');
 var pkg = require('./package.json');
 
 var topDir = './';
@@ -37,29 +36,16 @@ function buildTask() {
         ' * Copyright (C) 2016 ' + pkg.author + '\n' +
         ' */\n\n';
 
-    var bundled = browserify(topDir + pkg.main, {standalone: 'Collections'})
+    return browserify(topDir + pkg.main, {standalone: 'js-collections'})
         .plugin(collapse)
         .bundle()
-        .pipe(source('Collections.bundle.js'))
+        .pipe(source('js-collections.js'))
         .pipe(streamify(insert.prepend(header)))
         .pipe(gulp.dest(outDir))
         .pipe(streamify(uglify()))
         .pipe(streamify(insert.prepend(header)))
-        .pipe(streamify(concat('Collections.bundle.min.js')))
+        .pipe(streamify(concat('js-collections.min.js')))
         .pipe(gulp.dest(outDir));
-
-    var nonBundled = browserify(topDir + pkg.main, {standalone: 'Collections'})
-        .plugin(collapse)
-        .bundle()
-        .pipe(source('Collections.js'))
-        .pipe(streamify(insert.prepend(header)))
-        .pipe(gulp.dest(outDir))
-        .pipe(streamify(uglify()))
-        .pipe(streamify(insert.prepend(header)))
-        .pipe(streamify(concat('Collections.min.js')))
-        .pipe(gulp.dest(outDir));
-
-    return merge(bundled, nonBundled);
 }
 
 function packageTask() {
@@ -68,7 +54,7 @@ function packageTask() {
     ];
 
     return gulp.src(files)
-        .pipe(zip('Collections.js.zip'))
+        .pipe(zip('js-collections.js.zip'))
         .pipe(gulp.dest(outDir));
 }
 
@@ -81,7 +67,7 @@ function lintTask() {
 
     var options = {
         globals: [
-            'Collections',
+            'collections',
             'afterAll',
             'afterEach',
             'beforeAll',
@@ -113,13 +99,12 @@ function watchTask() {
     return gulp.watch(files, ['lint', 'unit']);
 }
 
-gulp.task('build', buildTask);
-gulp.task('package', packageTask);
 gulp.task('lint', lintTask);
-gulp.task('unit', unitTask);
+gulp.task('unit', ['lint'], unitTask);
+gulp.task('build', ['unit'], buildTask);
+gulp.task('package', ['build'], packageTask);
 gulp.task('watch', watchTask);
 
 gulp.task('test', ['lint', 'unit']);
-gulp.task('all', ['lint', 'unit', 'build', 'package']);
-gulp.task('default', ['lint', 'unit', 'watch']);
+gulp.task('default', ['lint', 'unit', 'build', 'package']);
 

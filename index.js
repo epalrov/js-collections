@@ -1,12 +1,12 @@
 /*
- * index.js - JS Collections namespace
+ * index.js - js-collections namespace
  *
  * Copyright (C) 2016 Paolo Rovelli
  *
  * Author: Paolo Rovelli <paolorovelli@yahoo.it>
  */
 
-var Collections = (function() {
+var collections = (function() {
     var c = {};
 
     c.arraylist = null;
@@ -17,4 +17,4 @@ var Collections = (function() {
     return c;
 }());
 
-module.exports = Collections;
+module.exports = collections;
