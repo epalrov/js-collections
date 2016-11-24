@@ -16,9 +16,18 @@
  * the beginning or the end, whichever is closer to the specified index.
  */
 
-/** 
- * Constructs an empty <tt>LinkedList</tt> 
- */ 
+/**
+ * Constructs a <tt>LinkedListNode</tt>
+ */
+function LinkedListNode(e, n, p) {
+    this.elem = e;
+    this.next = n;
+    this.prev = p;
+}
+
+/**
+ * Constructs an empty <tt>LinkedList</tt>
+ */
 function LinkedList() {
     this.head = new LinkedListNode(null, null, null);
     this.head.next = this.head;
@@ -26,44 +35,44 @@ function LinkedList() {
     this.count = 0;
 }
 
-/** 
- * Returns the number of elements in this list. 
- */ 
-LinkedList.prototype.size = function() { 
-    return this.count; 
-} 
- 
-/** 
- * Returns <tt>true</tt> if this list contains no elements. 
- */ 
-LinkedList.prototype.isEmpty = function() { 
-    return this.count == 0 ? true : false; 
-} 
+/**
+ * Returns the number of elements in this list.
+ */
+LinkedList.prototype.size = function() {
+    return this.count;
+};
 
-/** 
-* Appends the specified element to the end of this list. 
-*/ 
+/**
+ * Returns <tt>true</tt> if this list contains no elements.
+ */
+LinkedList.prototype.isEmpty = function() {
+    return this.count === 0 ? true : false;
+};
+
+/**
+* Appends the specified element to the end of this list.
+*/
 LinkedList.prototype.add = function(e) {
-    var n = this.head; 
-    var node = new LinkedListNode(e, n, n.prev); 
+    var n = this.head;
+    var node = new LinkedListNode(e, n, n.prev);
     n.prev.next = node;
-    n.prev = node; 
-    this.count++; 
-    return true; 
-} 
+    n.prev = node;
+    this.count++;
+    return true;
+};
 
 /**
  * Inserts the specified element at the specified position in this list.
  */
 LinkedList.prototype.add2 = function(index, e) {
     var i, n = this.head;
-    if (index == this.count) {
+    if (index === this.count) {
         n = this.head;
     } else if (index >= 0 && index < this.count/2) {
         for (i = 0; i <= index; i++)
             n = n.next;
     } else if (index < this.count && index >= this.count/2) {
-        for (i = size; i > index; i--)
+        for (i = this.count; i > index; i--)
             n = n.prev;
     } else {
         throw new RangeError('Index: ' + index + ' Size: ' + this.count);
@@ -72,26 +81,26 @@ LinkedList.prototype.add2 = function(index, e) {
     n.prev.next = node;
     n.prev = node;
     this.count++;
-}
+};
 
 /**
  * Returns the element at the specified position in this list.
  */
 LinkedList.prototype.get = function(index) {
     var i, n = this.head;
-    if (index == this.count) {
+    if (index === this.count) {
         n = this.head;
     } else if (index >= 0 && index < this.count/2) {
         for (i = 0; i <= index; i++)
             n = n.next;
     } else if (index < this.count && index >= this.count/2) {
-        for (i = size; i > index; i--)
+        for (i = this.count; i > index; i--)
             n = n.prev;
     } else {
         throw new RangeError('Index: ' + index + ' Size: ' + this.count);
     }
     return n.elem;
-}
+};
 
 /**
  * Replaces the element at the specified position in this list with the
@@ -99,13 +108,13 @@ LinkedList.prototype.get = function(index) {
  */
 LinkedList.prototype.set = function(index, e) {
     var i, n = this.head;
-    if (index == this.count) {
+    if (index === this.count) {
         n = this.head;
     } else if (index >= 0 && index < this.count/2) {
         for (i = 0; i <= index; i++)
             n = n.next;
     } else if (index < this.count && index >= this.count/2) {
-        for (i = size; i > index; i--)
+        for (i = this.count; i > index; i--)
             n = n.prev;
     } else {
         throw new RangeError('Index: ' + index + ' Size: ' + this.count);
@@ -113,7 +122,7 @@ LinkedList.prototype.set = function(index, e) {
     var oldElem = n.elem;
     n.elem = e;
     return oldElem;
-}
+};
 
 /**
  * Removes the element at the specified position in this list.
@@ -133,7 +142,7 @@ LinkedList.prototype.remove = function(index) {
     n.prev.next = n.next;
     this.count--;
     return n.elem;
-}
+};
 
 /**
  * Removes all of the elements from this list.
@@ -145,14 +154,6 @@ LinkedList.prototype.clear = function() {
         n.prev.next = n.next;
         this.count--;
     }
-}
-
-function LinkedListNode(e, n, p) {
-    this.elem = e;
-    this.next = n;
-    this.prev = p;
-
-}
+};
 
 module.exports = LinkedList;
-
