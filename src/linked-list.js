@@ -61,36 +61,32 @@ LinkedList.prototype.add = function(e) {
     return true;
 };
 
-/**
- * Inserts the specified element at the specified position in this list.
- */
-LinkedList.prototype.add2 = function(index, e) {
-    var i, n = this.head;
-    if (index === this.count) {
-        n = this.head;
-    } else if (index >= 0 && index < this.count/2) {
-        for (i = 0; i <= index; i++)
-            n = n.next;
-    } else if (index < this.count && index >= this.count/2) {
-        for (i = this.count; i > index; i--)
-            n = n.prev;
-    } else {
-        throw new RangeError('Index: ' + index + ' Size: ' + this.count);
-    }
-    var node = new LinkedListNode(e, n, n.prev);
-    n.prev.next = node;
-    n.prev = node;
-    this.count++;
-};
+//  /**
+//   * Inserts the specified element at the specified position in this list.
+//  */
+//  LinkedList.prototype.add2 = function(index, e) {
+//      var i, n = this.head;
+//      if (index >= 0 && index < this.count/2) {
+//          for (i = 0; i <= index; i++)
+//              n = n.next;
+//      } else if (index < this.count && index >= this.count/2) {
+//          for (i = this.count; i > index; i--)
+//              n = n.prev;
+//      } else {
+//          throw new RangeError('Index: ' + index + ' Size: ' + this.count);
+//      }
+//      var node = new LinkedListNode(e, n, n.prev);
+//      n.prev.next = node;
+//      n.prev = node;
+//      this.count++;
+//  };
 
 /**
  * Returns the element at the specified position in this list.
  */
 LinkedList.prototype.get = function(index) {
     var i, n = this.head;
-    if (index === this.count) {
-        n = this.head;
-    } else if (index >= 0 && index < this.count/2) {
+    if (index >= 0 && index < this.count/2) {
         for (i = 0; i <= index; i++)
             n = n.next;
     } else if (index < this.count && index >= this.count/2) {
@@ -108,9 +104,7 @@ LinkedList.prototype.get = function(index) {
  */
 LinkedList.prototype.set = function(index, e) {
     var i, n = this.head;
-    if (index === this.count) {
-        n = this.head;
-    } else if (index >= 0 && index < this.count/2) {
+    if (index >= 0 && index < this.count/2) {
         for (i = 0; i <= index; i++)
             n = n.next;
     } else if (index < this.count && index >= this.count/2) {

@@ -2,6 +2,7 @@
 /test
 /dist/*.zip
 /node_modules
+/coverage
 
 gulpfile.js
 .gitignore

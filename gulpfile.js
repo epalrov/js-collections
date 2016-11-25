@@ -10,15 +10,16 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var eslint = require('gulp-eslint');
 var insert = require('gulp-insert');
+var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
-var util = require('gulp-util');
 var zip = require('gulp-zip');
 
 var browserify = require('browserify');
 var collapse = require('bundle-collapser/plugin');
 var source = require('vinyl-source-stream');
+
 var pkg = require('./package.json');
 
 var topDir = './';
@@ -67,7 +68,6 @@ function lintTask() {
 
     var options = {
         globals: [
-            'collections',
             'afterAll',
             'afterEach',
             'beforeAll',
@@ -84,10 +84,16 @@ function lintTask() {
         .pipe(eslint.failAfterError());
 }
 
-function unitTask() {
-    return gulp.src([testDir + '**/*.js'], {read: false})
-        .pipe(mocha({reporter: 'spec'}))
-        .on('error', util.log);
+function unitTestTask() {
+    return gulp.src([srcDir + '**/*.js'])
+        .pipe(istanbul())
+        .pipe(istanbul.hookRequire())
+        .on('finish', function() {
+            return gulp.src([testDir + '**/*.js'], {read: false})
+                .pipe(mocha({reporter: 'spec'}))
+                .pipe(istanbul.writeReports())
+                .pipe(istanbul.enforceThresholds({thresholds: {global: 75}}));
+        });
 }
 
 function watchTask() {
@@ -96,15 +102,15 @@ function watchTask() {
         srcDir + '**/*.js',
         testDir + '**/*.js'
     ];
-    return gulp.watch(files, ['lint', 'unit']);
+    return gulp.watch(files, ['lint', 'unit-test', 'build']);
 }
 
 gulp.task('lint', lintTask);
-gulp.task('unit', ['lint'], unitTask);
-gulp.task('build', ['unit'], buildTask);
+gulp.task('unit-test', ['lint'], unitTestTask);
+gulp.task('build', ['unit-test'], buildTask);
 gulp.task('package', ['build'], packageTask);
 gulp.task('watch', watchTask);
 
-gulp.task('test', ['lint', 'unit']);
-gulp.task('default', ['lint', 'unit', 'build', 'package']);
+gulp.task('test', ['lint', 'unit-test']);
+gulp.task('default', ['lint', 'unit-test', 'build', 'package']);
 
