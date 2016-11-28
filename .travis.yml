@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "6"
+  - "5"
+  - "4"
+
+before_script:
+  - npm install
+
+script:
+  - gulp test
+  - gulp build
+  - gulp package
+
+dist: trusty
+

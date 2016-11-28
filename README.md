@@ -1,12 +1,15 @@
+[![Build Status](https://travis-ci.org/epalrov/js-collections.svg?branch=master)](https://travis-ci.org/epalrov/js-collections)
+[![NPM Version](https://img.shields.io/npm/v/js-collections.svg)](https://img.shields.io/npm/v/js-collections-js.svg)
+
+
+
 # js-collections
 
-## Summary    
-
-Basic JavaScript Collection library.
+js-collections is a basic JavaScript collection library.
 
 ## Description
 
-JavaScript Collections represents a unified library for storing and manipulating groups of object. This implementation offer a variety of representations, including:
+js-ollections represents a unified library for storing and manipulating groups of object. This implementation offer a variety of representations, including:
  - arrays (ArrayList) - have the properties of random-access memory: very fast for accessing elements by position and for iterating over them, but slower for inserting and removing elements at arbitrary positions because require adjusting the position of other elements.
  - linked lists (LinkedList) - accessing elements by position is slow, because you have to follow the reference chain from the start of the list, but insertion and removal operations can be performed in constant time by rearranging the cell references.
  - hash tables (HashMap) - provide a way of storing elements indexed on their content rather than on an integer-valued index, as with lists. In contrast to arrays and linked lists, hash tables provide no support for accessing elements by position, but access by content is usally very fast, as are insertion and removal.
