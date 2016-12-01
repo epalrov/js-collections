@@ -63,6 +63,13 @@ describe('unit tests - linked list', function() {
     it('should modify each element of the list', function() {
         e.forEach(function(v, i) {
             expect(l.set(i, 'love')).to.equal(v);
+            expect(l.set(i, v)).to.equal('love');
+        });
+    });
+
+    it('should iterate through elements', function() {
+        l.forEach(function(v, i) {
+            expect(v).to.equal(e[i]);
         });
     });
 
@@ -73,6 +80,7 @@ describe('unit tests - linked list', function() {
     });
 
     it('should throw out of range exceptions', function() {
+        expect(l.add.bind(l, 1, 'love')).to.throw('Index: 1 Size: 0');
         expect(l.get.bind(l, 0)).to.throw('Index: 0 Size: 0');
         expect(l.set.bind(l, 0, 'love')).to.throw('Index: 0 Size: 0');
         expect(l.remove.bind(l, 0)).to.throw('Index: 0 Size: 0');

@@ -50,36 +50,45 @@ LinkedList.prototype.isEmpty = function() {
 };
 
 /**
-* Appends the specified element to the end of this list.
-*/
-LinkedList.prototype.add = function(e) {
+ * Appends the specified element to the end of this list.
+ */
+function append(e) {
     var n = this.head;
     var node = new LinkedListNode(e, n, n.prev);
     n.prev.next = node;
     n.prev = node;
     this.count++;
     return true;
-};
+}
 
-//  /**
-//   * Inserts the specified element at the specified position in this list.
-//  */
-//  LinkedList.prototype.add2 = function(index, e) {
-//      var i, n = this.head;
-//      if (index >= 0 && index < this.count/2) {
-//          for (i = 0; i <= index; i++)
-//              n = n.next;
-//      } else if (index < this.count && index >= this.count/2) {
-//          for (i = this.count; i > index; i--)
-//              n = n.prev;
-//      } else {
-//          throw new RangeError('Index: ' + index + ' Size: ' + this.count);
-//      }
-//      var node = new LinkedListNode(e, n, n.prev);
-//      n.prev.next = node;
-//      n.prev = node;
-//      this.count++;
-//  };
+/**
+ * Inserts the specified element at the specified position in this list.
+ */
+function insert(index, e) {
+    var i, n = this.head;
+    if (index >= 0 && index < this.count/2) {
+        for (i = 0; i <= index; i++)
+            n = n.next;
+    } else if (index < this.count && index >= this.count/2) {
+        for (i = this.count; i > index; i--)
+            n = n.prev;
+    } else {
+        throw new RangeError('Index: ' + index + ' Size: ' + this.count);
+    }
+    var node = new LinkedListNode(e, n, n.prev);
+    n.prev.next = node;
+    n.prev = node;
+    this.count++;
+    return true;
+}
+
+/**
+ * Adds the an element to this list. Overloads append(e) or insert(index, e).
+ */
+LinkedList.prototype.add = function() {
+    return arguments.length === 2 ?
+        insert.apply(this, arguments) : append.apply(this, arguments);
+};
 
 /**
  * Returns the element at the specified position in this list.
@@ -147,6 +156,51 @@ LinkedList.prototype.clear = function() {
         n.next.prev = n.prev;
         n.prev.next = n.next;
         this.count--;
+    }
+};
+
+/**
+ * Constructs a <tt>LinkedListIterator</tt>
+ */
+function LinkedListIterator(l) {
+    this.list = l;
+    this.index = 0;
+    this.currNode = l.head;
+    this.nextNode = l.head.next;
+}
+
+LinkedListIterator.prototype.hasNext = function() {
+    return this.index === this.list.count ? false : true;
+};
+
+LinkedListIterator.prototype.nextIndex = function() {
+    return this.index;
+};
+
+LinkedListIterator.prototype.next = function() {
+    this.index++;
+    this.currNode = this.nextNode;
+    this.nextNode = this.currNode.next;
+    return this.currNode.elem;
+};
+
+/**
+ * Returns a list iterator.
+ */
+LinkedList.prototype.iterator = function() {
+    return new LinkedListIterator(this);
+};
+
+/**
+ * Iterates along the list.
+ */
+LinkedList.prototype.forEach = function(callback) {
+    var i, e, itr = this.iterator();
+    while (itr.hasNext()) {
+        i = itr.nextIndex();
+        e = itr.next();
+        if (typeof callback === 'function')
+            callback(e, i, this);
     }
 };
 
