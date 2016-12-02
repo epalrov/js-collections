@@ -12,7 +12,7 @@ var collections = (function() {
     c.arraylist = null;
     c.linkedlist = require('./src/linked-list.js');
     c.hashmap = null;
-    c.treeset = null;
+    c.treeset = require('./src/tree-set.js');
 
     return c;
 }());
