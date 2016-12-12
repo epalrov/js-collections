@@ -52,5 +52,17 @@ describe('unit tests - tree set', function() {
         });
     });
 
+    it('should iterate through elements', function() {
+        s.forEach(function(v) {
+            expect(v).to.be.oneOf(e);
+        });
+    });
+
+    it('should clear the whole set', function() {
+        s.clear();
+        expect(s.isEmpty()).to.equal(true);
+        expect(s.size()).to.equal(0);
+    });
+
 });
 

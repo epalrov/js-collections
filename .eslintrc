@@ -13,7 +13,7 @@ env:
 rules:
   # Possible Errors
   no-cond-assign: 2
-  no-console: [1, {allow: [warn, error]}]
+  no-console: [2, {allow: [warn, error]}]
   no-constant-condition: 2
   no-control-regex: 2
   no-debugger: 2

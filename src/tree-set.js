@@ -45,16 +45,14 @@ function compare(elem1, elem2) {
     return 0;
 }
 
-/*
- * function getFirstEntry() {
- *     var e = this.root;
- *     if (e) {
- *         while (e.left)
- *             e = e.left;
- *     }
- *     return e;
- * }
- */
+function getFirstEntry() {
+    var e = this.root;
+    if (e) {
+        while (e.left)
+            e = e.left;
+    }
+    return e;
+}
 
 function getNextEntry(e) {
     var n, c;
@@ -219,6 +217,54 @@ TreeSet.prototype.remove = function(elem) {
 
     // element not found
     return false;
+};
+
+/**
+ * Removes all of the elements from this set.
+ */
+TreeSet.prototype.clear = function() {
+    this.head = null;
+    this.count = 0;
+};
+
+/**
+ * Constructs a <tt>TreeSetIterator</tt>
+ */
+function TreeSetIterator(s) {
+    this.set = s;
+    this.currEntry = null;
+    this.nextEntry = getFirstEntry.call(s);
+}
+
+TreeSetIterator.prototype.hasNext = function() {
+    return this.nextEntry === null ? false : true;
+};
+
+TreeSetIterator.prototype.next = function() {
+    if (this.nextEntry === null)
+        throw new Error('Null pointer exception');
+    this.currEntry = this.nextEntry;
+    this.nextEntry = getNextEntry(this.currEntry);
+    return this.currEntry.elem;
+};
+
+/**
+ * Returns a tree iterator.
+ */
+TreeSet.prototype.iterator = function() {
+    return new TreeSetIterator(this);
+};
+
+/**
+ * Iterates along the tree.
+ */
+TreeSet.prototype.forEach = function(callback) {
+    var e, itr = this.iterator();
+    while (itr.hasNext()) {
+        e = itr.next();
+        if (typeof callback === 'function')
+            callback(e, this);
+    }
 };
 
 module.exports = TreeSet;

@@ -12,5 +12,8 @@ script:
   - gulp build
   - gulp package
 
+after_success:
+  - codeclimate-test-reporter < coverage/lcov.info
+
 dist: trusty
 
