@@ -31,65 +31,79 @@ function TreeSetEntry(e, p) {
 function TreeSet() {
     this.root = null;
     this.count = 0;
+}
 
-//    function getFirstEntry() {
-//        var e = this.root;
-//        if (e) {
-//            while (e.left)
-//                e = e.left;
-//        }
-//        return e;
-//    }
-//
-//    function getNextEntry(e) {
-//        var n, c;
-//
-//        if (!e)
-//            return null;
-//
-//        if (!e.right) {
-//            c = e;
-//            n = e.parent;
-//            while (n && c === n.right) {
-//                c = n;
-//                n = n.parent;
-//            }
-//        } else {
-//            n = e.right;
-//            while (n.left)
-//                n = n.left;
-//        }
-//        return n;
-//    }
-//
-//    function removeEntry(e) {
-//        var n, c;
-//
-//        if (!e)
-//            return;
-//
-//        // Entry with two children:
-//        // - replace the specified entry with its successor by copying.
-//        // - note that a successor always exixts!
-//        // - note also that the replacement alghoritm continue!
-//        if (e.left && e.right) {
-//            n = getNextEntry(e);
-//            e.elem = n.elem;
-//            e = n;
-//        }
-//
-//        // Entry with one child or no children
-//        c = (e.left ? e.left : e.right);
-//        if (c)
-//            c.parent = e.parent;
-//
-//        if (!e.parent)
-//            this.root = c;
-//        else if (e === e.parent.left)
-//            e.parent.left = c;
-//        else
-//            e.parent.right = c;
-//    }
+/*
+ * private methods
+ */
+
+function compare(elem1, elem2) {
+    if (elem1 < elem2)
+        return -1;
+    else if (elem1 > elem2)
+        return +1;
+    return 0;
+}
+
+/*
+ * function getFirstEntry() {
+ *     var e = this.root;
+ *     if (e) {
+ *         while (e.left)
+ *             e = e.left;
+ *     }
+ *     return e;
+ * }
+ */
+
+function getNextEntry(e) {
+    var n, c;
+
+    if (!e)
+        return null;
+
+    if (!e.right) {
+        c = e;
+        n = e.parent;
+        while (n && c === n.right) {
+            c = n;
+            n = n.parent;
+        }
+    } else {
+        n = e.right;
+        while (n.left)
+            n = n.left;
+    }
+    return n;
+}
+
+function removeEntry(e) {
+    var n, c;
+
+    if (!e)
+        return;
+
+    // Entry with two children:
+    // - replace the specified entry with its successor by copying.
+    // - note that a successor always exixts!
+    // - note also that the replacement alghoritm continue!
+    if (e.left && e.right) {
+        n = getNextEntry(e);
+        e.elem = n.elem;
+        e = n;
+    }
+
+    // Entry with one child or no children
+    c = (e.left ? e.left : e.right);
+    if (c)
+        c.parent = e.parent;
+
+    if (!e.parent)
+        this.root = c;
+    else if (e === e.parent.left)
+        e.parent.left = c;
+    else
+        e.parent.right = c;
 }
 
 /**
@@ -104,6 +118,33 @@ TreeSet.prototype.size = function() {
  */
 TreeSet.prototype.isEmpty = function() {
     return this.count === 0 ? true : false;
+};
+
+/**
+ * Returns <tt>true</tt> if this set contains the specified element.
+ */
+TreeSet.prototype.contains = function(elem) {
+    var cmp = 0;
+    var e = this.root;
+
+    // a null element is not comparable
+    if (!elem)
+        throw new Error('Null pointer exception');
+
+    // walk the tree looking for the element if already present
+    while (e) {
+        cmp = typeof elem.compareTo === 'function' ?
+            elem.compareTo(e.elem) : compare(elem, e.elem);
+        if (cmp < 0)
+            e = e.left;
+        else if (cmp > 0)
+            e = e.right;
+        else // (cmp === 0)
+            return true;
+    }
+
+    // not found!
+    return false;
 };
 
 /**
@@ -130,7 +171,8 @@ TreeSet.prototype.add = function(elem) {
     // walk the tree looking for the element if already present
     while (e) {
         parent = e;
-        cmp = elem.compareTo(e.elem);
+        cmp = typeof elem.compareTo === 'function' ?
+            elem.compareTo(e.elem) : compare(elem, e.elem);
         if (cmp < 0)
             e = e.left;
         else if (cmp > 0)
@@ -147,6 +189,36 @@ TreeSet.prototype.add = function(elem) {
         parent.right = e;
     this.count++;
     return true;
+};
+
+/**
+ * Removes the specified element from this set if it is present.
+ */
+TreeSet.prototype.remove = function(elem) {
+    var cmp = 0;
+    var e = this.root;
+
+    // a null element is not comparable
+    if (!elem)
+        throw new Error('Null pointer exception');
+
+    // walk the tree looking for the element if present
+    while (e) {
+        cmp = typeof elem.compareTo === 'function' ?
+            elem.compareTo(e.elem) : compare(elem, e.elem);
+        if (cmp < 0) {
+            e = e.left;
+        } else if (cmp > 0) {
+            e = e.right;
+        } else { // (cmp === 0)
+            removeEntry.call(this, e);
+            this.count--;
+            return true;
+        }
+    }
+
+    // element not found
+    return false;
 };
 
 module.exports = TreeSet;

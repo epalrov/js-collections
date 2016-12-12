@@ -32,5 +32,25 @@ describe('unit tests - tree set', function() {
         expect(s.size()).to.equal(1);
     });
 
+    it('should remove the element from the set', function() {
+        expect(s.remove(e[0])).to.equal(true);
+        expect(s.isEmpty()).to.equal(true);
+        expect(s.size()).to.equal(0);
+    });
+
+    it('should add many elements to the set', function() {
+        e.forEach(function(v, i) {
+            expect(s.add(v)).to.equal(true);
+            expect(s.isEmpty()).to.equal(false);
+            expect(s.size()).to.equal(i+1);
+        });
+    });
+
+    it('should contains the added elements', function() {
+        e.forEach(function(v) {
+            expect(s.contains(v)).to.equal(true);
+        });
+    });
+
 });
 

@@ -1,13 +1,7 @@
 [![Build Status](https://travis-ci.org/epalrov/js-collections.svg?branch=master)](https://travis-ci.org/epalrov/js-collections)
 [![NPM Version](https://img.shields.io/npm/v/js-collections.svg)](https://img.shields.io/npm/v/js-collections-js.svg)
 
-
-
 # js-collections
-
-js-collections is a basic JavaScript collection library.
-
-## Description
 
 js-collections represents a unified library for storing and manipulating groups of object. This implementation offer a variety of representations, including:
  - arrays (ArrayList) - have the properties of random-access memory: very fast for accessing elements by position and for iterating over them, but slower for inserting and removing elements at arbitrary positions because require adjusting the position of other elements.
@@ -18,6 +12,12 @@ js-collections represents a unified library for storing and manipulating groups 
 A large variety of methods are implemented, in the same fashion as the standard Java Collection Framework (java.util).
 
 Finally it would be a good way to learn about JavaScript Object-Oriented Programming :-)
+
+## Installing
+
+To install the task runner, run `sudo npm install -g gulp`
+
+To install project dependencies `npm install`
 
 ## Building and Testing
 

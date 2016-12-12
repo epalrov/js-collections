@@ -1,7 +1,7 @@
 {
   "name": "js-collections",
-  "version": "1.0.2",
-  "description": "JavaScript Collections",
+  "version": "1.0.3",
+  "description": "a basic JavaScript collection library",
   "author": "Paolo Rovelli <paolorovelli@yahoo.it>",
   "license": "Unlicense",
   "homepage": "https://github.com/epalrov/js-collections#readme",
