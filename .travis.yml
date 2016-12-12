@@ -1,19 +1,22 @@
 language: node_js
 node_js:
-- "6"
-- "5"
-- "4"
+  - "6"
+  - "5"
+  - "4"
+
+addons: 
+  code_climate: 
+    repo_token: c913ce5cbb0ff01bdfef06f9b7dedfbd779b8a8d92352000637565f2c4367c44
 
 before_script:
-- npm install
+  - npm install
 
 script:
-- gulp test
-- gulp build
-- gulp package
+  - gulp test
+  - gulp build
+  - gulp package
 
-after_success:
-- CODECLIMATE_REPO_TOKEN=7e4db13ec8c052a3fe44f43ffadd3f40ff07a5ec codeclimate-test-reporter < ./coverage/lcov.info
-
-dist: trusty
+after_script:
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < ./coverage/lcov.info
 

@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/epalrov/js-collections.svg?branch=master)](https://travis-ci.org/epalrov/js-collections)
 [![Code Climate](https://codeclimate.com/github/epalrov/js-collections/badges/gpa.svg)](https://codeclimate.com/github/epalrov/js-collections)
-[![NPM Version](https://img.shields.io/npm/v/js-collections.svg)](https://img.shields.io/npm/v/js-collections-js.svg)
+[![Code Coverage](https://codeclimate.com/github/epalrov/js-collections/badges/coverage.svg)](https://codeclimate.com/github/epalrov/js-collections)
 
 # js-collections
 
