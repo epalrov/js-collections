@@ -1,19 +1,19 @@
 language: node_js
 node_js:
-  - "6"
-  - "5"
-  - "4"
+- "6"
+- "5"
+- "4"
 
 before_script:
-  - npm install
+- npm install
 
 script:
-  - gulp test
-  - gulp build
-  - gulp package
+- gulp test
+- gulp build
+- gulp package
 
 after_success:
-  - codeclimate-test-reporter < coverage/lcov.info
+- CODECLIMATE_REPO_TOKEN=7e4db13ec8c052a3fe44f43ffadd3f40ff07a5ec codeclimate-test-reporter < ./coverage/lcov.info
 
 dist: trusty
 
