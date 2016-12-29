@@ -10,6 +10,9 @@
     "url": "git+https://github.com/epalrov/js-collections.git"
   },
   "main": "index.js",
+  "engines": {
+    "node": ">=4.0"
+  },
   "devDependencies": {
     "browserify": "^13.1.1",
     "bundle-collapser": "^1.2.1",
